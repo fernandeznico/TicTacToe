@@ -9,6 +9,13 @@ class ComputerIA:
         self.positions_taken = positions_taken
         self.rival_positions_taken = rival_positions_taken
 
+    def move(self):
+        types_of_movements = ('win', 'defend')
+        for move_type in types_of_movements:
+            position_to_take = self.try_move_for(move_type)
+            if position_to_take:
+                return position_to_take
+
     def try_move_for(self, intention: str):
         if intention == 'win':
             positions_set = self.positions_taken
@@ -18,8 +25,4 @@ class ComputerIA:
             raise ValueError('intention need be "win" or "defend" not "%s"' % intention)
         take_position = get_win_position(win_sets, [positions_set])
         return take_position
-
-    def move(self):
-        self.try_move_for('win')
-        self.try_move_for('defend')
 
