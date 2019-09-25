@@ -2,18 +2,19 @@
 @package RESTAPI
 RESTful implementation for a backend support to a TicTacToe game.
 """
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 from BackEnd.ComputerIA import ComputerIA
 
-server = Flask(__name__)
+app = Flask(__name__)
 
 
-@server.route('/')
+@app.route('/', methods=['POST'])
 def get_computer_move():
-    cia = ComputerIA({'a', 'b'}, {'e', 'i'})
+    request_json = request.json
+    cia = ComputerIA(set(request_json['computer']), set(request_json['player']))
     return jsonify(cia.move())
 
 
 if __name__ == "__main__":
-    server.run(debug=True)
+    app.run(debug=True)
