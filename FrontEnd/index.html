@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Tic-Tac-Toe</title>
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+<body>
+ 
+<form action="/" id="testForm">
+  <input type="submit" value="test">
+</form>
+<!-- the result of the search will be rendered inside this div -->
+<div id="result"></div>
+ 
+<script>
+// Attach a submit handler to the form
+$( "#testForm" ).submit(function( event ) {
+ 
+  // Stop form from submitting normally
+  event.preventDefault();
+ 
+  // Send the data using post
+  $.getJSON( 'http://127.0.0.1:5000/', { "computer": ["a", "b"], "player": ["c", "e"] },
+              function( data ) {
+                $( "#result" ).empty().append( data );
+              });
+});
+</script>
+ 
+</body>
+</html>
