@@ -43,6 +43,8 @@ def return_one_object_in_a_set_present_in_difference_with_one_of_the_list_where_
     :param post_operator_set: Set of object for filter the list
     :return: One object of the minor difference
     """
+    if not post_operator_set or not pre_operator_sets:
+        return None
     lower_difference_len = len(pre_operator_sets[0])
     object_to_return = None
     for pre_operator_set in pre_operator_sets:
