@@ -17,7 +17,8 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 def get_computer_move():
     request_args = request.args
     request_dict = request_args.to_dict(flat=False)
-    if not request_dict:
-        return jsonify({'error': 'Need player positions'})
+    for key_ in ['computer[]', 'player[]']:
+        if key_ not in request_dict.keys():
+            request_dict[key_] = []
     cia = ComputerIA(set(request_dict['computer[]']), set(request_dict['player[]']))
     return jsonify(cia.move())
