@@ -6,27 +6,47 @@
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body>
+  <table>
+    <tr>
+      <th><input type="button" onclick="move(this)" id="a"></th>
+      <th><input type="button" onclick="move(this)" id="b"></th>
+      <th><input type="button" onclick="move(this)" id="c"></th>
+    </tr>
+    <tr>
+      <th><input type="button" onclick="move(this)" id="d"></th>
+      <th><input type="button" onclick="move(this)" id="e"></th>
+      <th><input type="button" onclick="move(this)" id="f"></th>
+    </tr>
+    <tr>
+      <th><input type="button" onclick="move(this)" id="g"></th>
+      <th><input type="button" onclick="move(this)" id="h"></th>
+      <th><input type="button" onclick="move(this)" id="i"></th>
+    </tr>
+  </table>
  
-<form action="/" id="testForm">
-  <input type="submit" value="test">
-</form>
-<!-- the result of the search will be rendered inside this div -->
-<div id="result"></div>
- 
-<script>
-// Attach a submit handler to the form
-$( "#testForm" ).submit(function( event ) {
- 
-  // Stop form from submitting normally
-  event.preventDefault();
- 
-  // Send the data using post
-  $.getJSON( 'http://127.0.0.1:5000/', { "computer": ["a", "b"], "player": ["c", "e"] },
-              function( data ) {
-                $( "#result" ).empty().append( data );
-              });
-});
-</script>
- 
+  <script>
+  // Attach a submit handler to the form
+  function move( but ) {
+    document.getElementById(but.id).disabled = true;
+    document.getElementById(but.id).value = 'x';
+
+    but_id_list = ["a", "b", "c", "d", "e", "f", "g", "h", "i"];
+    positions_dict = { 'computer': [], 'player': [] };
+    but_id_list.forEach(but_id => {
+      if( document.getElementById(but_id).value === 'x' ) {
+        positions_dict['player'].push(but_id);
+      } else if ( document.getElementById(but_id).value === 'o' ) {
+        positions_dict['computer'].push(but_id);
+      }
+    });
+  
+    // Send the data using post
+    $.getJSON( 'http://127.0.0.1:5000/', positions_dict,
+                function( data ) {
+                  document.getElementById(data).disabled = true;
+                  document.getElementById(data).value = 'o';
+                });
+  }
+  </script>
 </body>
 </html>
